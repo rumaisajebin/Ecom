@@ -1,0 +1,93 @@
+{% extends 'user/base.html' %}
+{% block main %}
+<div class="container h-auto ">
+  <div class="card mb-3 h-auto">
+  <form action="{% url 'place_order' %}" method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-4 order-md-2 mb-4">
+        <h4 class="d-flex justify-content-between align-items-center">
+          <span class="text-muted">Your cart</span>
+        </h4>
+        <!-- Cart Details -->
+        <ul class="list-group mb-3">
+          <hr>
+          {% for item in cart %}
+          <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+              <h6 class="my-0">{{ item.product.Product_Name }}</h6>
+              <small class="text-muted">{{ item.quantity }}</small>
+            </div>
+            <span class="text-muted">₹ {{ item.total_price }}</span>
+          </li>
+          {% endfor %}
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Total Cost </span>
+            <strong> ₹ {{ total_cart_price }} </strong>
+            <span>Discount Price </span>
+            <strong> ₹ {{ discount_price }} </strong>
+          </li>
+        </ul>
+        <!-- Payment details -->
+        <h4 class="mb-3">Payment</h4>
+        <div class="d-block my-3">
+          <div class="form-check">
+            <div class="row">
+              <div class="col-auto">
+                <input class="form-check-input" type="radio" id="cashOnDelivery" name="paymentmethod" value="COD">
+                <label class="form-check-label" for="cashOnDelivery">Cash on Delivery</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-auto">
+                <input class="form-check-input" type="radio" id="paypal" name="paymentmethod" value="PayPal">
+                <label class="form-check-label" for="paypal">PayPal</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-auto">
+                <input class="form-check-input" type="radio" id="Wallet" name="paymentmethod" value="Wallet">
+                <label class="form-check-label" for="Wallet">Wallet</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="mb-4">
+        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Continue to checkout">
+      </div>
+      <div class="col-md-8 order-md-1 my-3">
+        <a href="{% url 'add_address' %}" class="btn btn-success">Add New Address</a>
+        <div class="form-group">
+          <label for="addressSelect">Select Address</label>
+          <select class="form-control" id="addressSelect" name="address">
+            {% for user_address in user_addresses %}
+            <option value="{{user_address.id}}">{{ user_address.full_name }} - {{ user_address.address1 }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+<!-- Existing HTML content -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("form").submit(function (event) {
+      event.preventDefault();
+      var paymentMethod = $("input[name='paymentmethod']:checked").val();
+      // Check if payment method is selected
+      if (paymentMethod) {
+        // Submit the form for processing
+        $(this).unbind('submit').submit();
+      } else {
+        // Notify user to select a payment method
+        alert("Please select a payment method.");
+      }
+    });
+  });
+</script>
+
+{% endblock main %}

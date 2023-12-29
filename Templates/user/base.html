@@ -1,0 +1,181 @@
+{% load static%}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link type="text/css" rel="stylesheet" href="{% static 'home.css' %}">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <!-- staticfile -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <title>RareBlu</title>
+
+</head>
+
+<body>
+
+  <section class="test">
+    <!-- Primary navbar -->
+    <nav class="navbar navbar-expand-lg" style="background-color: #2F3C7E;">
+      <div class="container-fluid ">
+        <!-- Navbar brand and toggler for small screens -->
+        <a class="navbar-brand" href="{% url 'home' %}"
+          style="font-family: 'Kavoon', serif; color: #FBEAEB; font-size: 28px;">RareBlu</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse justify-content-between align-items-center gap-3"
+          id="navbarSupportedContent" style="background-color: #2F3C7E;">
+          <ul class="navbar-nav gap-2">
+            <!-- List items -->
+            <form class="d-flex " method="get" action="{% url 'search' %}">
+              <input class="form-control me-2" name="query" type="search" placeholder="Search" aria-label="Search"
+                size="80">
+            </form>
+            <li class="nav-item">
+              <a class="btn btn-outline" href="{% url 'home' %}" style="color: #FBEAEB;">Home <span
+                  class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-outline" href="{% url 'product' %}" style="color: #FBEAEB;">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-outline" href="{% url 'product' %}" style="color: #FBEAEB;">About</a>
+            </li>
+
+
+            <!-- Icons or user controls -->
+            <div class="d-flex align-items-center">
+              <a href="{% url 'cart' %}" class="btn btn-outline">
+                <i class="fas fa-shopping-cart" style="color: #ffffff;"></i>
+                <sup class="rounded-pill small text-dark fw-bold">{{ total_cart_item }}</sup>
+              </a>
+
+              <a href="{% url 'wishlist' %}" class="btn btn-outline">
+                <i class="fa-solid fa-heart" style="color: #ffffff;"></i>
+                <sup class="rounded-pill small text-dark fw-bold">{{ wishlist_items }}</sup>
+              </a>
+
+              <a href="{% url 'profile' %}" class="btn btn-outline">
+                <i class="fa-solid fa-user me-3" style="color: #ffffff;"></i>
+              </a>
+
+              {% if user.is_authenticated %}
+              <a class="btn btn-outline text-white" href="{% url 'log_out' %}"><b>Log Out</b></a>
+              {% else %}
+              <a class="btn btn-outline text-white" href="{% url 'log_in' %}"><b>Log In</b></a>
+              {% endif %}
+            </div>
+
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+  </section>
+
+  {% if messages %}
+  {% for message in messages %}
+  {% if messages %}
+  <div class="justify-content-center fixed-top top-0 start-50 translate-middle-x" style="z-index: 1000;">
+    {% for message in messages %}
+      {% if message.tags == 'success' %}
+        <div class="alert alert-success alert-dismissible fade show text-center w-50" role="alert">
+          <strong>Success! </strong>{{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% elif message.tags == 'error' %}
+        <div class="alert alert-danger alert-dismissible fade show text-center w-50" role="alert">
+          <strong>Error! </strong>{{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% else %}
+        <div class="alert alert-info alert-dismissible fade show text-center w-50" role="alert">
+          <strong>Error! </strong>{{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+  {% endfor %}
+{% endif %}
+
+  <section class="content-section d-flex flex-column justify-content  py-3 vh-50">
+    {% block main %}
+    {% endblock main %}
+  </section>
+
+  <!-- Footer -->
+  <footer class="mt-auto bg-solid #2F3C7E text-center text-lg-start ">
+    <div class="container-bg-solid p-4">
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0 d-flex justify-content-center">
+          <div class="card-1">
+            <div class="text-center">
+              <a class="navbar-brand" href="#"
+                style="font-family: 'Kavoon', serif; color: #FBEAEB; font-size: 28px;">RareBlu</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0 ">
+          <h5 class="text-uppercase mb-3 mb-md-4 d-flex justify-content-center">Information</h5>
+          <div class="foot-mb-0 d-flex justify-content-center">
+            <ul class="list-unstyled foot-list">
+              <li><a href="#!" class="text-white">Shipping & Delivery</a></li>
+              <li><a href="#!" class="text-white">Cancellation & Refund</a></li>
+              <li><a href="#!" class="text-white">Payment Method</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase mb-3 mb-md-4 d-flex justify-content-center">Customer service</h5>
+          <div class="foot-mb-0 d-flex justify-content-center">
+            <ul class="list-unstyled foot-list">
+              <li><a href="#!" class="text-white">My Account</a></li>
+              <li><a href="#!" class="text-white">Order History</a></li>
+              <li><a href="#!" class="text-white">Terms & Conditions</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center p-3 ">
+      © 2020 RareBlu
+    </div>
+
+  </footer>
+
+  <!-- Optional JavaScript; choose one of the two! -->
+
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+  crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.8"></script>
+
+
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>
