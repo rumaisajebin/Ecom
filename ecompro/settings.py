@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-4k_4!qd)i%w4-8&uk-)9xj@6e3k)*__*e(k^gc0!$gx#%c0111
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['13.53.143.12']
+ALLOWED_HOSTS = ['13.53.42.62']
 
 # mydrfproject/settings.py
 CART_SESSION_ID = 'cart'
