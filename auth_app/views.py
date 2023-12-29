@@ -167,12 +167,9 @@ def profile(request):
         u_profile.save()
     
     order = Order.objects.filter(user=request.user)
-    current_date = datetime.now(timezone.utc)
+    current_date = timezone.now()
     active_coupon = Coupon.objects.filter(active=True, is_expired__gte=current_date)
     return render(request, 'user/user_profile.html', {'order': order, 'u_profile': u_profile, 'active_coupon': active_coupon})
-
-
-
 
 
 

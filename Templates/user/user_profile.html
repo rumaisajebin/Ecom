@@ -59,6 +59,8 @@
 
   <hr>
 
+  {% if active_coupon %}
+  {% for coupon in active_coupon %}
   <div class="container">
     <div class="text-center">
       <u>
@@ -66,8 +68,6 @@
       </u>
     </div>
     <div class="row">
-      {% if active_coupon %}
-      {% for coupon in active_coupon %}
       <div class="col-md-4">
         <div class="card mb-2">
           <div class="card-body">
