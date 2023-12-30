@@ -62,6 +62,13 @@
 
 </head>
 <body>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>Error!</strong>{{ message }}
+    </div>
+    {% endfor %}
+    {% endif%}
     <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-md-6">
@@ -92,6 +99,25 @@
         integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
         crossorigin="anonymous"></script>
 
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.getElementById('otpForm');
+                const otpInput = document.getElementById('otpInput');
+    
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    const otpValue = otpInput.value.trim();
+    
+                    if (otpValue.length !== 6 || isNaN(otpValue)) {
+                        alert('Please enter a valid 6-digit OTP.');
+                    } else {
+                        alert('OTP is valid! Processing the form...');
+                        // Uncomment the line below to submit the form
+                        // form.submit();
+                    }
+                });
+            });
+        </script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

@@ -106,7 +106,7 @@ def sign_up(request):
                 request.session['referral_code'] = referral_code
                 print("Referral code stored in session:", referral_code)
             send_otp(request)
-            return render(request,'emailotp.html')
+            return redirect('otp_page')
     else:
         return render(request,'signup.html')
     
@@ -209,7 +209,7 @@ def edit_profile_action(request):
         u_profile.PhoneNumber = phone_number
         u_profile.save()
 
-    return render('profile')
+    return redirect('profile')
 
 
 def change_password(request):
