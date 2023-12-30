@@ -38,7 +38,7 @@ LOGIN_URL = 'log_in'
 # Application definition
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://www.rareblu.com',
+    'https://rareblu.shop',
 ]
 
 INSTALLED_APPS = [
