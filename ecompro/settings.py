@@ -37,6 +37,10 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'log_in'
 # Application definition
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://www.rareblu.com',
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
